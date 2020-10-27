@@ -5,6 +5,7 @@ import FacebookLogin from "react-facebook-login";
 import GoogleLogin from "react-google-login";
 import { Link } from "react-router-dom";
 import Image from "./images/fondo.JPG";
+import axios from "axios";
 
 class Login extends Component {
   constructor(props) {
@@ -26,6 +27,26 @@ class Login extends Component {
     let getlocal = JSON.parse(localStorage.getItem("cuentasUsuarios"));
 
     this.validarDatos(getlocal, datos);
+
+    //this.enviarDatosApiRest(datos);
+  };
+
+  enviarDatosApiRest = (datos) => {
+    axios
+      .post(
+        "http://localhost/frontendret/apiRet/apiLoginReact",
+        JSON.stringify({
+          usuario: datos.username,
+          password: datos.password,
+          funcion: "validarLoginPrueba",
+        })
+      )
+      .then(function (response) {
+        console.log(response);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
   };
 
   validarDatos = (getlocal, datos) => {
@@ -110,11 +131,12 @@ class Login extends Component {
   };
 
   responseGoogle = (response) => {
+    console.log(response);
     if (
       response.profileObj != null &&
-      response.profileObj != "" &&
-      response.profileObj != false &&
-      response.profileObj != undefined
+      response.profileObj !== "" &&
+      response.profileObj !== false &&
+      response.profileObj !== undefined
     ) {
       //VALIDAR QUE LOS DATOS EXISTEN PARA INGRESAR A LA api DE VUE
       let getlocal = JSON.parse(localStorage.getItem("cuentasUsuarios"));
@@ -145,12 +167,12 @@ class Login extends Component {
 
     if (
       getlocal != null &&
-      getlocal != "" &&
-      getlocal != false &&
-      getlocal != undefined
+      getlocal !== "" &&
+      getlocal !== false &&
+      getlocal !== undefined
     ) {
       for (var i = getlocal.length - 1; i >= 0; i--) {
-        if (getlocal[i]["email"] == datos.email) {
+        if (getlocal[i]["email"] === datos.email) {
           existe = true;
 
           const datosSesion = {
@@ -172,9 +194,9 @@ class Login extends Component {
       //TENGO QUE CREAR LE REGISTRO Y POSTERIORMENTE LO REDIRECCIONO
       if (
         getlocal != null &&
-        getlocal != "" &&
-        getlocal != false &&
-        getlocal != undefined
+        getlocal !== "" &&
+        getlocal !== false &&
+        getlocal !== undefined
       ) {
         listaActual = getlocal;
       }

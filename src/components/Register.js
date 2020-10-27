@@ -30,9 +30,9 @@ class Register extends Component {
 
     if (
       getlocal != null &&
-      getlocal != "" &&
-      getlocal != false &&
-      getlocal != undefined
+      getlocal !== "" &&
+      getlocal !== false &&
+      getlocal !== undefined
     ) {
       //comprobamos que nuestra variable CUENTAS EXISTA
 
@@ -155,7 +155,7 @@ class Register extends Component {
             </Card>
           </Col>
           <Col xs={24} sm={20} md={20} lg={10}>
-            <img src={Image} />
+            <img src={Image} alt="" />
           </Col>
         </Row>
       </div>
